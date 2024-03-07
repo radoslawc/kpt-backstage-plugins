@@ -23,6 +23,7 @@ jobs:
           wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py
           python generate_dependabot.py
           mv dependabot.yml .github/
+          git branch -a
           
       - name: Commit change
         uses: EndBug/add-and-commit@v9
