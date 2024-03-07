@@ -33,4 +33,7 @@ jobs:
       - name: Commit change
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git push origin ${{ github.head_ref }}
+        run: |
+          git add .
+          git diff --quiet || git commit -m "Regenerating Dependabot config"
+          git push origin ${{ github.head_ref }}
