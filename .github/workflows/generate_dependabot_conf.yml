@@ -30,4 +30,6 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git add .
           git diff --quiet || git commit -m "Regenerating Dependabot configuration"
+          git branch -a
+          git remote -v
           git push origin ${{ github.head_ref }}
