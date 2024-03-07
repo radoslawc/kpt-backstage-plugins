@@ -40,3 +40,4 @@ site
 
 # Vscode settings
 .vscode
+.tmp
