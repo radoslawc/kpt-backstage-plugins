@@ -24,3 +24,4 @@ jobs:
           title: Update AUTHORS
           body: Credit new contributors by updating AUTHORS
           branch: update-authors
+          base: main
