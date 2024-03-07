@@ -1,0 +1,33 @@
+name: Generate Dependabot Configuration
+
+on:
+  pull_request:
+    paths:
+      - '**/*'
+
+jobs:
+  run_python_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - name: Run config generation script
+        run: |
+          wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py
+          python generate_dependabot.py
+          mv dependabot.yml .github/
+
+      - name: Commit changes
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add .
+          git diff --quiet || git commit -m "Regenerating Dependabot configuration"
+          git push origin ${{ github.head_ref }}
