@@ -3,7 +3,9 @@ name: Generate Dependabot Configuration
 on:
   pull_request:
     paths:
-      - '**/*'
+      - '**/Dockerfile*'
+      - '**/go.mod'
+      - '**/package.json'
   workflow_dispatch:
 
 jobs:
