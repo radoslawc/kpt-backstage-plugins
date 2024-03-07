@@ -25,7 +25,7 @@ jobs:
         
       - name: Run config generation script
         run: |
-          wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py -o /tmp/generate_dependabot.py
+          wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py -O /tmp/generate_dependabot.py
           python /tmp/generate_dependabot.py
           mv dependabot.yml .github/
           git branch -a
