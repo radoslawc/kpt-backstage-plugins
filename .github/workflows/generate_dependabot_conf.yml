@@ -37,5 +37,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add .github/dependabot.yml
-          git diff --quiet || git commit -m "Regenerating Dependabot config"
+          git commit -m "Regenerating Dependabot config"
           git push origin ${{ github.head_ref }}
