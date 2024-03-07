@@ -32,8 +32,9 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          base: ${{ github.head_ref }}
+          base: main
           branch: update-dependabot
+          delete-branch: true
           commit-message: Regenerating Dependabot configuration
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           title: '[Dependabot] Regenerating Dependabot configuration'
