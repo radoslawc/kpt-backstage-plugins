@@ -39,5 +39,7 @@ jobs:
           body: |
             This is auto-generated Pull Request to regenerate Dependabot configuration
             with [generate_dependabot.py][1]
+            It was triggered by this Pull Request: 
+            https://github.com/${{github.repository}}/pull/${{ github.event.pull_request.number }}
 
             [1]: https://github.com/chmrad/prow-infra/blob/main/tools/generate_dependabot.py
