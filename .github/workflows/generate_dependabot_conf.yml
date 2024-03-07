@@ -1,0 +1,40 @@
+name: Generate Dependabot Configuration
+
+on:
+  pull_request:
+    paths:
+      - '**/*'
+  workflow_dispatch:
+
+jobs:
+  run_python_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12.2
+
+      - name: Run config generation script
+        run: |
+          wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py -O /tmp/generate_dependabot.py
+          python /tmp/generate_dependabot.py
+          mv dependabot.yml .github/
+          git branch -a
+          git status
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: Regenerating Dependabot configuration
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          title: '[Dependabot] Regenerating Dependabot configuration'
+          body: |
+            This is auto-generated Pull Request to regenerate Dependabot configuration
+            with [generate_dependabot.py][1]
+
+            [1]: https://github.com/chmrad/prow-infra/blob/main/tools/generate_dependabot.py
