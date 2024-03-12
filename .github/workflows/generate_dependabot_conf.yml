@@ -3,7 +3,7 @@ name: Generate Dependabot Configuration
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - '**/Dockerfile*'
       - '**/go.mod'
