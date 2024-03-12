@@ -1,7 +1,9 @@
 name: Generate Dependabot Configuration
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
     paths:
       - '**/Dockerfile*'
       - '**/go.mod'
@@ -23,6 +25,7 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,8 +37,6 @@ jobs:
           wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py -O /tmp/generate_dependabot.py
           python /tmp/generate_dependabot.py
           mv dependabot.yml .github/
-          git branch -a
-          git status
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
