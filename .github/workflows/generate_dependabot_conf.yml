@@ -23,8 +23,8 @@ jobs:
       - uses: actions/create-github-app-token@v1
         id: generate-token
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
       - name: Set up Python
@@ -37,6 +37,12 @@ jobs:
           wget https://raw.githubusercontent.com/chmrad/prow-infra/main/tools/generate_dependabot.py -O /tmp/generate_dependabot.py
           python /tmp/generate_dependabot.py
           mv dependabot.yml .github/
+
+      - name: Get Closed PR number
+        uses: jwalton/gh-find-current-pr@master
+        id: find_PR
+        with:
+          state: closed
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -52,6 +58,6 @@ jobs:
             This is auto-generated Pull Request to regenerate Dependabot configuration
             with [generate_dependabot.py][1]
             It was triggered by this Pull Request: 
-            https://github.com/${{github.repository}}/pull/${{ github.event.pull_request.number }}
+            https://github.com/${{github.repository}}/pull/${{ steps.find_PR.outputs.pr }}
 
             [1]: https://github.com/chmrad/prow-infra/blob/main/tools/generate_dependabot.py
