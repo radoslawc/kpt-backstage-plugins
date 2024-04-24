@@ -38,7 +38,7 @@ presubmits:
     always_run: true
     spec:
       containers:
-      - image: nephio/gotests:1671656214984921088
+      - image: nephio/gotests:1782782171367346176
         command:
         - "/bin/sh"
         - "-c"
