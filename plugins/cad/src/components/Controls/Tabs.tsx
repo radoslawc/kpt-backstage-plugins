@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Tab as MUITab , Tabs as MUITabs } from '@material-ui/core';
+import { makeStyles, Tab as MUITab, Tabs as MUITabs } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 
 type TabsProps = {
@@ -24,9 +24,33 @@ type TabsProps = {
   }[];
 };
 
-// TODO Work in progress.
+const useStyles = makeStyles(theme => ({
+  tabs: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  tabsIndicator: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: theme.palette.tabbar.indicator,
+    height: theme.spacing(0.5),
+  },
+  tab: {
+    width: '130px',
+    minWidth: '130px',
+    height: '64px',
+    marginLeft: '24px',
+    marginRight: '24px',
+    fontWeight: theme.typography.fontWeightBold,
+    fontSize: theme.typography.pxToRem(13),
+    color: theme.palette.textSubtle,
+  },
+  content: {
+    padding: '24px'
+  }
+}));
+
 export const Tabs = (props: TabsProps) => {
-  // const classes = useStyles(); TODO
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent, newValue: number) => {
@@ -34,22 +58,33 @@ export const Tabs = (props: TabsProps) => {
   };
 
   return (
-    <>
-      <MUITabs value={value} onChange={handleChange}>
+    <div>
+      <MUITabs
+        classes={{ root: classes.tabs, indicator: classes.tabsIndicator }}
+        value={value}
+        onChange={handleChange}
+      >
         {
           props.tabs.map(({ label }, index) => (
-            <MUITab key={index} label={label} />
+            <MUITab
+              key={index}
+              classes={{ root: classes.tab }}
+              label={label}
+            />
           ))
         }
       </MUITabs>
       {
         props.tabs.map(({ content }, index) => (
-          <div hidden={value !== index}>
-            { content }
+          <div
+            className={classes.content}
+            hidden={value !== index}
+          >
+            {content}
           </div>
         ))
       }
-    </>
+    </div>
   );
 };
 
