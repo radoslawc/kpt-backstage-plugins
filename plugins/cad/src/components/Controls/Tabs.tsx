@@ -46,8 +46,8 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.textSubtle,
   },
   content: {
-    padding: '24px'
-  }
+    padding: '24px',
+  },
 }));
 
 export const Tabs = (props: TabsProps) => {
@@ -65,28 +65,20 @@ export const Tabs = (props: TabsProps) => {
         value={value}
         onChange={handleChange}
       >
-        {
-          props.tabs.map(({ label, icon }, index) => (
-            <MUITab
-              key={index}
-              classes={{ root: classes.tab }}
-              label={label ?? ''}
-              icon={icon}
-            />
-          ))
-        }
+        {props.tabs.map(({ label, icon }, index) => (
+          <MUITab
+            key={index}
+            classes={{ root: classes.tab }}
+            label={label ?? ''}
+            icon={icon}
+          />
+        ))}
       </MUITabs>
-      {
-        props.tabs.map(({ content }, index) => (
-          <div
-            className={classes.content}
-            hidden={value !== index}
-          >
-            {content}
-          </div>
-        ))
-      }
+      {props.tabs.map(({ content }, index) => (
+        <div className={classes.content} hidden={value !== index}>
+          {content}
+        </div>
+      ))}
     </div>
   );
 };
-
