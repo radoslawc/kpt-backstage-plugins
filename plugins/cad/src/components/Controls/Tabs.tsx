@@ -15,12 +15,13 @@
  */
 
 import { makeStyles, Tab as MUITab, Tabs as MUITabs } from '@material-ui/core';
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 type TabsProps = {
   tabs: readonly {
-    readonly label: string;
-    readonly content: ReactNode
+    readonly label?: string;
+    readonly icon?: ReactElement;
+    readonly content: ReactNode;
   }[];
 };
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     height: '64px',
     marginLeft: '24px',
     marginRight: '24px',
-    fontWeight: theme.typography.fontWeightBold,
+    fontWeight: 'bold',
     fontSize: theme.typography.pxToRem(13),
     color: theme.palette.textSubtle,
   },
@@ -53,7 +54,7 @@ export const Tabs = (props: TabsProps) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.ChangeEvent, newValue: number) => {
+  const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
@@ -65,11 +66,12 @@ export const Tabs = (props: TabsProps) => {
         onChange={handleChange}
       >
         {
-          props.tabs.map(({ label }, index) => (
+          props.tabs.map(({ label, icon }, index) => (
             <MUITab
               key={index}
               classes={{ root: classes.tab }}
-              label={label}
+              label={label ?? ''}
+              icon={icon}
             />
           ))
         }
